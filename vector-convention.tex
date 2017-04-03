@@ -22,6 +22,8 @@
 	We introduce a convention that aims to make array notations shorter. In a nutshell, it revolves around the following: $\overrightarrow{x} = x_1, \ldots, x_n$. When handling numerical vectors, the boldface $\bfV \in \bbRR^k$ is often used. Here, we favour the arrow notation as it is rather seldom, unlikely to conflict with an already existing notation, more flexible as we will see, as well as to leave the boldface available for other meanings. We also extend this notation in a functional programming's \texttt{apply} fashion.
 \end{abstract}
 
+\section{Indexation}
+
 \paragraph{Generalities.} For $X$ a set, let $\overrightarrow{x}$ denote a finite array of elements in $X$:
 \[ \overrightarrow{x} = x_1, \ldots, x_n, \]
 where $n$ is implicit. The reversed sequence is denoted by
@@ -33,6 +35,28 @@ where $n$ is implicit. The reversed sequence is denoted by
 		\item Identifying sequences and tuples, a real (or complex) valued vector is naturally denoted with an arrow: $\overrightarrow{v} \in \bbRR^k$.
 	\end{itemize}
 \end{examples*}
+
+\paragraph{Multiple indexes.} We consider an array of arrays of elements of $X$ an array of elements of $X$ itself, by implicit concatenation. This allows the following notation:
+\begin{align*}
+	\overrightarrow{\overrightarrow{x}} &= \overrightarrow{x}_1, \ldots, \overrightarrow{x}_n \\
+	&= x_{1, 1}, \ldots, x_{m_1, 1}, x_{1, 2}, \ldots, x_{m_2, 2}, \ldots, x_{1, n}, \ldots, x_{m_n, n} ,
+\end{align*}
+with $\overrightarrow{m}$ and $n$ implicit. Notice how the indexes are written from the inner-most (corresponding to the lower arrow) to the outer-most (corresponding to the upper arrow), so that the arrows are expanded from top to bottom. If $x$ is instead $k$-indexed, then it should be written with $k$ arrows over it. 
+
+\begin{examples*}
+	\begin{itemize}
+		\item The notation $\overrightarrow{\overrightarrow{x}} = \overrightarrow{y}$ means that $\overrightarrow{\overrightarrow{x}}$ is a partition of $\overrightarrow{y}$ in subsequences of consecutive elements:
+			\[ x_{1, 1}, \ldots, x_{m_1, 1}, \ldots, x_{1, n}, \ldots, x_{m_n, n} = y_1, \ldots, y_k . \]
+			In particular, $\sum \overrightarrow{m} = k$.
+	\end{itemize}
+\end{examples*}
+
+\paragraph{Over-indexing.} For $a \in X$, let
+\[ \overrightarrow{a} = a, a, \ldots, a, \]
+where the length of the list is implicit. In particular, if $\overrightarrow{x} \in X$ is an array of elements of $X$, then
+\[ \overrightarrow{\overrightarrow{x}} = \overrightarrow{x}, \ldots, \overrightarrow{x} = x_1, \ldots, x_n, \ldots \ldots, x_1, \ldots, x_n . \]
+
+\section{Operations}
 
 \paragraph{Formulas.} If $f$ is any kind of mathematical statement (e.g. a function, logical formula, quantification) taking an elements of $X$ as argument, and $\overrightarrow{x} \in X$, then let
 \[ \overrightarrow{f (x)} = f (x_1), \ldots, f (x_n) . \]
@@ -50,12 +74,52 @@ If there is no ambiguity, the notation $f (\overrightarrow{x})$ can also be used
 \paragraph{Operations with multiple sequences.} If $\overrightarrow{x}$ and $\overrightarrow{y}$ are two sequences of elements of $X$, then their concatenation is written as
 \[ \overrightarrow{x} \overrightarrow{y} = x_1, \ldots, x_n, y_1, \ldots, y_m . \]
 If $n = m$, and if $f$ is any kind of mathematical statement, then let
-\[ \overrightarrow{f (x, y)} = f (x_1, y_1), \ldots, f (x_n, y_n) . \]
+\[ \overrightarrow{f (x, y)} = f (x_1, y_1), f (x_2, y_2), \ldots, f (x_n, y_n) . \]
 Of course, this can be extended to more than two sequences.
 
 \begin{example*}
-	Take $\overrightarrow{x}, \overrightarrow{y} \in \bbRR^k$. Their sum can be naturally written as $\overrightarrow{x} + \overrightarrow{y}$. Their inner product is given by $\sum \overrightarrow{x y}$.
+	Take $\overrightarrow{x}, \overrightarrow{y} \in \bbRR^k$. Their sum can be naturally written as $\overrightarrow{x} + \overrightarrow{y}$. Their inner product is given by $\sum \overrightarrow{x \cdot y}$.
 \end{example*}
+
+\section{Comparative examples}
+
+\begin{itemize}
+
+	\item Let $\overrightarrow{x} \in X$. We have
+		\begin{align*}
+			\overrightarrow{x} &= x_1, \ldots, x_n , \\
+			\overrightarrow{\overrightarrow{x}} &= \overrightarrow{x}, \ldots, \overrightarrow{x} , \\
+			x &\phantom{=} \text{doesn't make sense} .
+		\end{align*}
+
+	\item Let $\overrightarrow{x}, \overrightarrow{y} \in X$. We have
+		\begin{align*}
+			\overrightarrow{x} \overrightarrow{y} &= x_1, \ldots, x_n, y_1, \ldots, y_m , \\
+			\overrightarrow{x} \overrightarrow{\overrightarrow{y}} &= x_1, \ldots, x_n, \overrightarrow{y}, \ldots, \overrightarrow{y} , \\
+			\overrightarrow{\overrightarrow{x} \overrightarrow{y}} &= \overrightarrow{x} \overrightarrow{y}, \ldots, \overrightarrow{x} \overrightarrow{y} , \\
+			\overrightarrow{\overrightarrow{x}} \overrightarrow{\overrightarrow{y}} &= \overrightarrow{x}, \ldots, \overrightarrow{x}, \overrightarrow{y}, \ldots, \overrightarrow{y} .	
+		\end{align*}
+
+	\item Let $\overrightarrow{x}, \overrightarrow{y} \in X$ and $f$ be any kind of mathematical statement. We have
+		\begin{align*}
+			\overrightarrow{f (x, y)} &= f (x_1, y_1), f (x_2, y_2), \ldots, f (x_n, y_n) , \\
+			f (\overrightarrow{x}, \overrightarrow{y}) &= f ((x_1, \ldots, x_n), (y_1, \ldots, y_n)) , \\
+			\overrightarrow{f (x, \overrightarrow{y})} &= f (x_1, \overrightarrow{y}), \ldots, f (x_n, \overrightarrow{y}) , \\
+			\overrightarrow{f (\overrightarrow{x}, \overrightarrow{y})} &= f (\overrightarrow{x}, \overrightarrow{y}), f (\overrightarrow{x}, \overrightarrow{y}), \ldots, f (\overrightarrow{x}, \overrightarrow{y}) .
+		\end{align*}
+
+	\item Let $\overrightarrow{\overrightarrow{x}} \in X$ be doubly indexed, and $\bigovoid$, $\bigboxvoid$ be any kind of index-based notation. We have
+		\begin{align*}
+			\bigboxvoid \overrightarrow{\overrightarrow{x}} &= \bigboxvoid_{i = 1}^n \overrightarrow{x}_i , \\
+			\overrightarrow{\bigboxvoid \overrightarrow{x}} &= \left( \bigboxvoid_{j = 1}^{m_1} x_{j, 1} \right), \left( \bigboxvoid_{j = 1}^{m_2} x_{j, 2} \right), \ldots, \left( \bigboxvoid_{j = 1}^{m_n} x_{j, n} \right) , \\
+			\bigovoid \overrightarrow{\bigboxvoid \overrightarrow{x}} &= \bigovoid_{i = 1}^n \left( \bigboxvoid \overrightarrow{x} \right)_i = \bigovoid_{i = 1}^n \bigboxvoid_{j = 1}^{m_i} x_{j, i} .
+		\end{align*}
+
+\end{itemize}
+
+\section{Danger zone}
+
+The following conventions should be used with caution, or not at all.
 
 \paragraph{Explicit index.} A sequence $\overrightarrow{x}$ may also be written as $\overrightarrow{x_i}$. The benefit is that the explicit index can be reused. It is of course unadvised to mix explicit and implicit index notations.
 
@@ -63,27 +127,6 @@ Of course, this can be extended to more than two sequences.
 	\begin{itemize}
 		\item A polynomial $P = \lambda_0 + \lambda_1 t + \lambda_2 t^2 + \cdots$ can be rewritten as $\sum \overrightarrow{\lambda_i t^i}$, and $\overrightarrow{\lambda_i t^i}$ are the monomials of $P$. We mention that in this case, the Einstein summation convention is even shorter: $P = \lambda_i t^i$.
 		\item The symmetric group $\frakSS_n$ acts on $X^n$ by $\sigma \overrightarrow{x_i} = \overrightarrow{x_{\sigma (i)}}$.
-	\end{itemize}
-\end{examples*}
-
-\paragraph{Multiple indexes.} We consider an array of arrays of elements of $X$ an array of elements of $X$ itself, by implicit concatenation. This allows the following notation:
-\begin{align*}
-	\overrightarrow{\overrightarrow{x}} &= \overrightarrow{x}_1, \ldots, \overrightarrow{x}_n \\
-	&= x_{1, 1}, \ldots, x_{m_1, 1}, x_{1, 2}, \ldots, x_{m_2, 2}, \ldots, x_{1, n}, \ldots, x_{m_n, n} ,
-\end{align*}
-with $\overrightarrow{m}$ and $n$ implicit. Notice how the indexes are written from the inner-most (corresponding to the lower arrow) to the outer-most (corresponding to the upper arrow), so that the arrows are expanded from top to bottom. If $x$ is instead $k$-indexed, then it should be written with $k$ arrows over it. 
-
-\begin{examples*}
-	\begin{itemize}
-		\item Let $\bigovoid$ and $\bigboxvoid$ be any kind of index-based notation. We have
-			\[ \bigboxvoid \overrightarrow{\overrightarrow{x}} = \bigboxvoid_{i = 1}^n \overrightarrow{x}_i , \]
-			so $\bigboxvoid$ is expected to operate on arrays of elements of $X$. We have
-			\[ \bigovoid \bigboxvoid \overrightarrow{\overrightarrow{x}} = \bigovoid \bigboxvoid_{i = 1}^n \overrightarrow{x}_i \]
-			and the notation doesn't expand further in general. However:
-			\[ \bigovoid \overrightarrow{\bigboxvoid \overrightarrow{x}} = \bigovoid_{i = 1}^n \left( \bigboxvoid \overrightarrow{x} \right)_i = \bigovoid_{i = 1}^n \bigboxvoid_{j = 1}^{m_i} x_{j, i} . \]
-		\item The notation $\overrightarrow{\overrightarrow{x}} = \overrightarrow{y}$ means that $\overrightarrow{\overrightarrow{x}}$ is a partition of $\overrightarrow{y}$ in subsequences of consecutive elements:
-			\[ x_{1, 1}, \ldots, x_{m_1, 1}, \ldots, x_{1, n}, \ldots, x_{m_n, n} = y_1, \ldots, y_k . \]
-			In particular, $\sum \overrightarrow{m} = k$.
 	\end{itemize}
 \end{examples*}
 
